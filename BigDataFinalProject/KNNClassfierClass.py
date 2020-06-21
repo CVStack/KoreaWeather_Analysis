@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
+import pandas as pd
 
 #SoftMax regression을 실행하는 클래스
 #model 생성, 결과값 시각화, 결과값 출력
@@ -16,7 +17,7 @@ class KNNClassifier:
         self.training_data, self.test_data, self.training_label, self.test_label = \
             train_test_split(training_data, training_label, test_size=0.2, random_state=4)
         self.knnc = KNeighborsClassifier(n_neighbors=n)
-        self.scaler = StandardScaler()  # normalization
+        self.scaler = RobustScaler()  # normalization
             #자동으로 테스트 데이터 생성
 
     def train(self):
@@ -42,6 +43,20 @@ class KNNClassifier:
 
         # print(metrics.accuracy_score(result, self.test_label))
         return metrics.accuracy_score(result, self.test_label);
+
+    def experiment(self, exper_point, exper_labels):
+
+        print(exper_point)
+        result = self.knnc.predict(self.scaler.transform(exper_point.iloc[0:, 2:]))
+        # print(result)
+
+        df_rs = pd.DataFrame({
+            'year' : exper_point['year'],
+            'month' : exper_point['month'],
+            'result' : result
+        })
+        #result 결과를 담는 dataframe 생성 후 return
+        return df_rs
 
 if __name__ == "__main__":
     iris_data = datasets.load_iris()

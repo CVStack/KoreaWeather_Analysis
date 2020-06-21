@@ -11,12 +11,12 @@ from sklearn import metrics
 #SoftMax regression을 실행하는 클래스
 #model 생성, 결과값 시각화, 결과값 출력
 class SoftmaxClassifier:
-    softreg = LogisticRegression(max_iter=100000, C=1e5) # logistic model을 생성, C = 정규화 수치
+    softreg = LogisticRegression(max_iter=2000, C=1e5) # logistic model을 생성, C = 정규화 수치
 
     def __init__(self, training_data, training_label): #생성자 -> 훈련 데이터와 이에 대한 결과값을 load
         self.training_data, self.test_data, self.training_label, self.test_label = \
             train_test_split(training_data, training_label, test_size=0.2, random_state=4)
-        self.scaler = MinMaxScaler()  # normalization
+        self.scaler = RobustScaler()  # normalization
             #자동으로 테스트 데이터 생성
 
     def train(self):

@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from BigDataFinalProject import SoftMaxClassifierClass
 from BigDataFinalProject import KNNClassfierClass
+from BigDataFinalProject import DataProviderClass
 
 from sklearn.preprocessing import StandardScaler
 
@@ -65,13 +66,8 @@ if __name__ == "__main__":
     data = pd.DataFrame(list(mycol.find()))
     print(data.isnull().sum()) # null 있는지 검사
 
-    pipeline = [
-        {"$group": {"_id": "$date", "allAverTem": {"$avg": "$averTem"}, "allMaxTem": {"$avg": "$MaxTem"},
-                    "allMinTem": {"$avg": "$MinTem"}}}
-    ]
-
-    df = pd.DataFrame(list(mycol.aggregate(pipeline)))  # 결과 dataframe에 담음
-
+    dp = DataProviderClass.DataProvider()
+    df, df2 = dp.get_TempData(1980)
     #Data Preprocessing
 
     #NAN Value Remove
@@ -110,9 +106,10 @@ if __name__ == "__main__":
 
     #trainging
 
-    AllSeason_data = pd.concat([spring_data, summer_data, fall_data, winter_data], axis = 0)
+    AllSeason_data = pd.concat([spring_data.iloc[0: int(len(spring_data) / 2)], summer_data, fall_data.iloc[0: int(len(fall_data) / 2)], winter_data], axis = 0)
+    # AllSeason_data = pd.concat([spring_data, summer_data, winter_data], axis = 0) #fall이랑 spring 이랑 비슷한 기후여서 한개 뻄
     print(AllSeason_data)
-    trainging_points = AllSeason_data.iloc[0:, 1:]
+    trainging_points = AllSeason_data.iloc[0:, 3:]
     trainging_labels = AllSeason_data['_id']
 
     print(trainging_points)
@@ -135,6 +132,21 @@ if __name__ == "__main__":
     plt.ylabel('Testing Accuracy')
     plt.show()
 
+    #experiment
+    max_k = accuracy_scores.index(max(accuracy_scores)) + 1 #가장 높은 정확도를 보인 k값을 가져옴
+    print('max_k ',max_k)
+    kc = KNNClassfierClass.KNNClassifier(trainging_points, trainging_labels, max_k)
+    kc.train()
+    # print(kc.test())
+
+    print(df2) #current data 출력
+
+    result =kc.experiment(df2.iloc[0:, 1:], df2['_id'])
+    # print(result)
+
+    result = result[result['year'] == 2018]
+
+    print(result)
     # data visualization
 
     # pipeline = [
