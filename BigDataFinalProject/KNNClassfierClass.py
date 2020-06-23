@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+
 import pandas as pd
 
 #SoftMax regression을 실행하는 클래스
@@ -42,7 +44,9 @@ class KNNClassifier:
         # print(result)
 
         # print(metrics.accuracy_score(result, self.test_label))
-        return metrics.accuracy_score(result, self.test_label);
+        confusion_matrix_rs = confusion_matrix(self.test_label, result)
+        metrics_rs = metrics.classification_report(self.test_label, result, digits=3)
+        return [metrics.accuracy_score(result, self.test_label), confusion_matrix_rs, metrics_rs];
 
     def experiment(self, exper_point, exper_labels):
 

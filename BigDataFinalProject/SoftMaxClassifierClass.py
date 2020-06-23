@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+import pandas as pd
 
 #SoftMax regression을 실행하는 클래스
 #model 생성, 결과값 시각화, 결과값 출력
@@ -40,8 +42,24 @@ class SoftmaxClassifier:
         print('model_test_label')
         print(result)
 
-        print(metrics.accuracy_score(result, self.test_label))
+        confusion_matrix_rs = confusion_matrix(self.test_label, result)
+        metrics_rs = metrics.classification_report(self.test_label, result, digits=3)
+        return [metrics.accuracy_score(result, self.test_label), confusion_matrix_rs, metrics_rs];
+        print('softmax', metrics.accuracy_score(result, self.test_label))
 
+    def experiment(self, exper_point):
+
+        print(exper_point)
+        result = self.softreg.predict(self.scaler.transform(exper_point.iloc[0:, 2:]))
+        # print(result)
+
+        df_rs = pd.DataFrame({
+            'year' : exper_point['year'],
+            'month' : exper_point['month'],
+            'result' : result
+        })
+        #result 결과를 담는 dataframe 생성 후 return
+        return df_rs
 
 if __name__ == "__main__":
     iris_data = datasets.load_iris()
