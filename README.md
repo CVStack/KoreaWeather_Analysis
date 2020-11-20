@@ -1,4 +1,4 @@
-# BigDataSystemDesign
+# KoreaWeather Anaysis
 
 2020-1 빅데이터 시스템 설계 수업 프로젝트
 
