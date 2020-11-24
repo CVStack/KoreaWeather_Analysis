@@ -2,7 +2,7 @@
 
 2020-1 빅데이터 시스템 설계 수업 프로젝트
 
-기상청 기온 데이터를 사용하여, 사계절이 뚜렷했던 과거의 기온에 비해 현대의 기온은 사계절이 뚜렷한지를 분석한다.
+프로젝트 목적 : 기상청 기온 데이터를 사용하여, 사계절이 뚜렷했던 과거의 기온에 비해 현대의 기온은 사계절이 뚜렷한지를 분석한다.
 
 ![image](https://user-images.githubusercontent.com/38209962/99799401-eea6aa00-2b75-11eb-8b83-ae98b9ceac64.png)
 
@@ -10,11 +10,9 @@
 
 활용 라이브러리 : pandas, sklearn, matplotlib
 
-활용 데이터 : 기상청 기온 데이터
-
 사용 모델 : KNN, LogisticRegression(softmax classification)
 
-실행 소스코드 : BigDataFinalProject/AnalysisTemperatures.py
+실행 소스코드 : sourceCode/AnalysisTemperatures.py
 
 사용 데이터 : 기상청 기온 데이터
 
