@@ -16,6 +16,10 @@
 
 실행 소스코드 : BigDataFinalProject/AnalysisTemperatures.py
 
+사용 데이터 : 기상청 기온 데이터
+
+![image](https://user-images.githubusercontent.com/38209962/100059026-b94bd600-2e6d-11eb-892c-ede0f25df304.png)
+
 모델 성능
 
 Logistic Regression
